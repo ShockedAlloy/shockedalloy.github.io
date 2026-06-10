@@ -10,11 +10,12 @@
             --bg-base: #fbfbfd;
             --text-main: #1d1d1f;
             --text-muted: #86868b;
-            --chi-blue: rgba(65, 182, 230, 0.15); /* Subtle Chicago Flag Blue */
-            --chi-red: rgba(228, 0, 43, 0.08);   /* Subtle Chicago Flag Red */
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.5);
+            --chi-blue: rgba(65, 182, 230, 0.12);
+            --chi-red: rgba(228, 0, 43, 0.06);
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
             --accent: #0066cc;
+            --timeline-line: #d2d2d7;
         }
 
         html {
@@ -27,15 +28,15 @@
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-base);
             background-image: 
-                radial-gradient(circle at 15% 50%, var(--chi-blue), transparent 25%),
-                radial-gradient(circle at 85% 30%, var(--chi-red), transparent 25%);
+                radial-gradient(circle at 0% 0%, var(--chi-blue) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, var(--chi-red) 0%, transparent 40%);
             background-attachment: fixed;
             color: var(--text-main);
-            line-height: 1.5;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Glassmorphism Navigation */
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -44,7 +45,7 @@
             backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
             border-bottom: 1px solid rgba(0,0,0,0.05);
-            z-index: 1000;
+            z-index: 100;
             display: flex;
             justify-content: center;
             padding: 1rem 0;
@@ -64,16 +65,15 @@
             color: var(--accent);
         }
 
-        /* Layout Utility */
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 6rem 2rem 4rem;
+            padding: 8rem 2rem 4rem;
         }
 
         /* Typography */
         h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             letter-spacing: -0.04em;
             line-height: 1.1;
             margin-bottom: 0.5rem;
@@ -81,15 +81,14 @@
         }
 
         h2 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             letter-spacing: -0.02em;
-            margin-top: 5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             font-weight: 600;
         }
 
         h3 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
@@ -97,44 +96,107 @@
         p {
             font-size: 1.1rem;
             color: var(--text-muted);
-            max-width: 800px;
         }
 
         .lead-text {
             font-size: 1.5rem;
             color: var(--text-muted);
             font-weight: 400;
-            max-width: 600px;
+            max-width: 700px;
+            margin-bottom: 4rem;
+        }
+
+        .quote-block {
+            text-align: center;
+            margin: 6rem 0;
+            padding: 3rem;
+            background: var(--glass-bg);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
         }
 
         .quote {
-            font-size: 1.25rem;
+            font-size: 1.75rem;
             font-style: italic;
-            color: var(--text-muted);
-            border-left: 3px solid var(--accent);
-            padding-left: 1.5rem;
-            margin: 2rem 0;
+            color: var(--text-main);
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 1rem;
         }
 
-        /* Chicago Motif Divider */
+        .quote-author {
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
         .chi-stars {
             text-align: center;
             color: #41B6E6;
             font-size: 1.5rem;
             letter-spacing: 0.5rem;
-            margin: 4rem 0;
+            margin: 2rem 0;
             opacity: 0.6;
         }
 
-        /* Glass Cards for Projects */
+        /* Timeline Layout */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin-top: 4rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--timeline-line);
+            border-radius: 2px;
+        }
+
+        .era {
+            position: relative;
+            margin-bottom: 6rem;
+        }
+
+        .era::before {
+            content: '';
+            position: absolute;
+            left: -3.4rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--bg-base);
+            border: 3px solid var(--accent);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .era-title {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* Glass Cards */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -144,16 +206,7 @@
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
         }
 
-        .role-tag {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--accent);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
+        /* Tech Tags */
         .tech-tags {
             margin-top: 1.5rem;
             display: flex;
@@ -162,265 +215,290 @@
         }
 
         .tag {
-            background: rgba(0, 0, 0, 0.04);
-            color: var(--text-main);
-            padding: 0.25rem 0.75rem;
+            background: rgba(0, 102, 204, 0.08);
+            color: var(--accent);
+            padding: 0.35rem 0.85rem;
             border-radius: 12px;
             font-size: 0.75rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        /* Legacy Portfolio Grid */
-        .portfolio-grid {
+        /* Interactive Grids for Assets */
+        .asset-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
-        .portfolio-item img {
+        .asset-item {
+            cursor: pointer;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: white;
+            padding: 0.5rem;
+        }
+
+        .asset-item img {
             width: 100%;
             height: auto;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .asset-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        /* Action Buttons */
+        .btn-demo {
+            display: inline-block;
+            background: var(--text-main);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-demo:hover {
+            background: var(--accent);
+        }
+
+        /* Lightbox Overlay */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(251, 251, 253, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: zoom-out;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
             border-radius: 16px;
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.2);
         }
 
-        .portfolio-item img:hover {
-            transform: scale(1.02);
+        .lightbox-caption {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: 500;
+            text-align: center;
+            max-width: 800px;
         }
 
-        /* Contact Form */
+        /* Forms */
         form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            gap: 1rem;
         }
-
-        .full-width {
-            grid-column: 1 / -1;
-        }
-
+        .full-width { grid-column: 1 / -1; }
         input, textarea {
             width: 100%;
             padding: 1rem;
             border: 1px solid rgba(0,0,0,0.1);
             border-radius: 12px;
-            background: rgba(255,255,255,0.8);
             font-family: inherit;
-            font-size: 1rem;
+            background: rgba(255,255,255,0.7);
             box-sizing: border-box;
-            transition: border-color 0.2s;
         }
-
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--accent);
         }
 
-        button {
-            background: var(--text-main);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 24px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-            width: max-content;
-        }
-
-        button:hover {
-            background: #000;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 3rem; }
+            h1 { font-size: 2.5rem; }
+            .timeline { padding-left: 2rem; }
+            .era::before { left: -2.4rem; }
             form { grid-template-columns: 1fr; }
-            .nav { display: none; } /* Consider adding a hamburger menu for mobile if needed */
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#story">Story</a>
+        <a href="#foundations">Foundations</a>
+        <a href="#transition">Transition</a>
         <a href="#engineering">Engineering</a>
-        <a href="#design">Design & Content</a>
         <a href="#contact">Contact</a>
     </nav>
 
     <div class="container">
-        <!-- Hero Section -->
+        <!-- Hero -->
         <header>
-            <img src="images/Digital Designs Logo.png" alt="" style="max-width: 80px; margin-bottom: 2rem;">
+            <div class="chi-stars" style="text-align: left; margin: 0 0 1rem 0;">✶ ✶ ✶ ✶</div>
             <h1>Deandre Coleman</h1>
-            <p class="lead-text">Senior Front-end Developer, Software Engineer & Curriculum Designer. Proudly built in Chicago.</p>
+            <p class="lead-text">Chicago Native. Computer Scientist. Interactive Problem Solver. Walking through a timeline of creation.</p>
         </header>
 
-        <div class="chi-stars">✶ ✶ ✶ ✶</div>
-
-        <!-- Story Section -->
-        <section id="story">
-            <h2>My Story</h2>
-            <img src="images/profile.jpg" alt="Deandre Coleman" style="width: 100%; max-width: 300px; border-radius: 24px; margin-bottom: 2rem;">
+        <div class="timeline">
             
-            <p style="color: var(--text-main);">Growing up in Chicago, I quickly learned that when resources are scarce, you must create your own. My journey has been diverse and dynamic: I've led Marines, printed production-quality banners, and designed engaging logos, brochures, posters, and magazines.</p>
-            
-            <p style="color: var(--text-main);">My technical skills include configuring and managing databases, and engineering robust digital experiences. I've created dynamic eLearning materials and played a key role in developing and managing multiple Learning Management Systems (LMS) and Student Information Systems (SIS).</p>
+            <!-- Era 1: Foundations -->
+            <div class="era" id="foundations">
+                <span class="era-title">Era 1: Foundations</span>
+                <h2>Military Discipline & Graphic Identity</h2>
+                <p>Growing up in Chicago taught me that when resources are scarce, you create your own. My professional journey began in the United States Marine Corps, where discipline met creativity. During my service, I was formally recognized and won awards for my graphic design work. I produced high-impact visual communications, production-quality prints, and comprehensive branding that translated complex military directives into compelling visual narratives.</p>
 
-            <p style="color: var(--text-main);">While achieving a Master’s in Computer Science, I became proficient in languages including HTML, CSS, JavaScript, Python, R, and SQL. My resourcefulness and dedication ensure that any task entrusted to me will be completed with excellence. Let’s collaborate and create something extraordinary together.</p>
-
-            <blockquote class="quote">
-                "Tomorrow may be fair, however stormy the sky of today." <br><br>— Lewis Howard Latimer
-            </blockquote>
-        </section>
-
-        <div class="chi-stars">✶ ✶ ✶ ✶</div>
-
-        <!-- Engineering Section -->
-        <section id="engineering">
-            <h2>Engineering & Architecture</h2>
-            
-            <article class="glass-card">
-                <span class="role-tag">Curriculum Developer & Technical Lead</span>
-                <h3>AI Passport Program</h3>
-                <p>Managed and developed a seven-module curriculum for a comprehensive AI program covering fundamentals to generative AI. Replaced static learning materials with interactive Python-based sandbox environments.</p>
-                <ul style="color: var(--text-muted);">
-                    <li>Guided participants through the curriculum, culminating in the final Impact Project.</li>
-                    <li>Built interactive applications focusing on medical imaging, deep learning, and data ethics.</li>
-                    <li>Ensured all course pages and Python applications met strict WCAG and ADA compliance standards.</li>
-                </ul>
-                <div class="tech-tags">
-                    <span class="tag">Python</span>
-                    <span class="tag">Streamlit</span>
-                    <span class="tag">Biomedical AI</span>
-                    <span class="tag">WCAG 2.1</span>
+                <div class="asset-grid">
+                    <div class="asset-item" onclick="openLightbox('images/Branding/Talon Reach Poster.jpg', 'Talon Reach Military Flyer - Graphic Design Award Winner')">
+                        <img src="images/Branding/Talon Reach Poster.jpg" alt="Talon Reach Poster">
+                    </div>
+                    <div class="asset-item" onclick="openLightbox('images/Branding/WTI Promotion Cover Art.jpg', 'WTI Promotion Cover Art - Visual Communication')">
+                        <img src="images/Branding/WTI Promotion Cover Art.jpg" alt="WTI Promotion">
+                    </div>
+                    <div class="asset-item" onclick="openLightbox('images/Logos/ACAD Logo.jpg', 'ACAD Department Logo - Brand Identity')">
+                        <img src="images/Logos/ACAD Logo.jpg" alt="ACAD Logo">
+                    </div>
+                    <div class="asset-item" onclick="openLightbox('images/AR/African Safari Poster.webp', 'Augmented Reality Concept - Interactive Print')">
+                        <img src="images/AR/African Safari Poster.webp" alt="African Safari AR">
+                    </div>
                 </div>
-            </article>
-
-            <article class="glass-card">
-                <span class="role-tag">Data Visualization Developer</span>
-                <h3>Automated Leadership Metrics Dashboard</h3>
-                <p>Created a centralized reporting system to provide real-time program metrics and project academic bottlenecks for university leadership.</p>
-                <ul style="color: var(--text-muted);">
-                    <li>Automated data architecture to visualize key performance indicators.</li>
-                    <li>Streamlined collection by integrating API connections across Canvas and Qualtrics.</li>
-                </ul>
-                <div class="tech-tags">
-                    <span class="tag">Power BI</span>
-                    <span class="tag">Canvas API</span>
-                    <span class="tag">Qualtrics API</span>
-                </div>
-            </article>
-
-            <article class="glass-card">
-                <span class="role-tag">Software Engineer</span>
-                <h3>Primal Play</h3>
-                <p>Prototyped an AI-driven fitness application focused on natural, evolutionary movement patterns with a premium UI architecture.</p>
-                <ul style="color: var(--text-muted);">
-                    <li>Designed a conceptual workout tracker utilizing computer vision for real-time movement analysis.</li>
-                    <li>Architected application structure with a focus on data privacy via federated learning.</li>
-                </ul>
-                <div class="tech-tags">
-                    <span class="tag">Computer Vision</span>
-                    <span class="tag">MediaPipe</span>
-                    <span class="tag">Federated Learning</span>
-                </div>
-            </article>
-
-            <article class="glass-card">
-                <span class="role-tag">Data Scientist</span>
-                <h3>Contextual Sports Analytics Model</h3>
-                <p>Constructed an elite regression model to predict Chicago Bulls game scores based on league-wide metrics, travel distance, player availability, and defensive ratings.</p>
-                <div class="tech-tags">
-                    <span class="tag">Python</span>
-                    <span class="tag">Regression Modeling</span>
-                    <span class="tag">Predictive Analytics</span>
-                </div>
-            </article>
-        </section>
-
-        <div class="chi-stars">✶ ✶ ✶ ✶</div>
-
-        <!-- Design & AR Section (Legacy Products) -->
-        <section id="design">
-            <h2>Design & Interactive Media</h2>
-            <p>A selection of my visual branding, digital learning environments, and augmented reality concepts.</p>
-
-            <h3>Augmented Reality (AR)</h3>
-            <div class="portfolio-grid">
-                <a href="images/AR/African Safari Poster.webp" target="_blank" class="portfolio-item">
-                    <img src="images/AR/African Safari Poster.webp" alt="African Safari AR Poster">
-                </a>
-                <a href="images/AR/Mountain Fishing Adventure.webp" target="_blank" class="portfolio-item">
-                    <img src="images/AR/Mountain Fishing Adventure.webp" alt="Mountain Fishing AR">
-                </a>
-                <a href="images/AR/Tropical Island Conservation.webp" target="_blank" class="portfolio-item">
-                    <img src="images/AR/Tropical Island Conservation.webp" alt="Conservation AR">
-                </a>
             </div>
 
-            <h3>Branding & Print Design</h3>
-            <div class="portfolio-grid">
-                <a href="images/Branding/Talon Reach Poster.jpg" target="_blank" class="portfolio-item">
-                    <img src="images/Branding/Talon Reach Poster.jpg" alt="Talon Reach Poster">
-                </a>
-                <a href="images/Branding/WTI Promotion Cover Art.jpg" target="_blank" class="portfolio-item">
-                    <img src="images/Branding/WTI Promotion Cover Art.jpg" alt="WTI Promotion">
-                </a>
-                <a href="images/Branding/Flyer.png" target="_blank" class="portfolio-item">
-                    <img src="images/Branding/Flyer.png" alt="Campaign Flyer">
-                </a>
+            <!-- Era 2: Transition -->
+            <div class="era" id="transition">
+                <span class="era-title">Era 2: Transition & Education</span>
+                <h2>From Visuals to Systems</h2>
+                <p>The transition from designing static graphics to engineering dynamic systems was fueled by a desire to build solutions at scale. I developed multiple Learning Management Systems (LMS), created dynamic eLearning materials, and mastered programming languages including Python, SQL, and JavaScript while earning my Master's in Computer Science.</p>
+                
+                <div class="quote-block">
+                    <div class="quote">"Tomorrow may be fair, however stormy the sky of today."</div>
+                    <div class="quote-author">Lewis Howard Latimer</div>
+                </div>
             </div>
 
-            <h3>Identity & Logos</h3>
-            <div class="portfolio-grid">
-                <a href="images/Logos/ACAD Logo.jpg" target="_blank" class="portfolio-item">
-                    <img src="images/Logos/ACAD Logo.jpg" alt="ACAD Logo">
-                </a>
-                <a href="images/Logos/Glitz & Glitter Gallaree.png" target="_blank" class="portfolio-item">
-                    <img src="images/Logos/Glitz & Glitter Gallaree.png" alt="Glitz & Glitter Logo">
-                </a>
-                <a href="images/Logos/PD Logo.png" target="_blank" class="portfolio-item">
-                    <img src="images/Logos/PD Logo.png" alt="People Development Logo">
-                </a>
+            <!-- Era 3: Engineering -->
+            <div class="era" id="engineering">
+                <span class="era-title">Era 3: Engineering & Innovation</span>
+                <h2>Architecting the Future</h2>
+                
+                <div class="glass-card">
+                    <h3>AI Passport Program</h3>
+                    <p>Spearheaded the technical development of a comprehensive biomedical AI curriculum. Transitioned the program from static documentation to interactive, Python-based sandboxes.</p>
+                    <ul style="color: var(--text-muted);">
+                        <li>Developed responsive, WCAG-compliant interactive applications for medical imaging and deep learning.</li>
+                        <li>Guided faculty and participants through complex generative AI architectures.</li>
+                    </ul>
+                    <div class="tech-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Streamlit</span>
+                        <span class="tag">Biomedical AI</span>
+                        <span class="tag">ADA Compliance</span>
+                    </div>
+                    <a href="https://aipassport.org" target="_blank" class="btn-demo">Run Demonstration</a>
+                </div>
+
+                <div class="glass-card">
+                    <h3>Chicago Bulls Predictive Model</h3>
+                    <p>Constructed an elite contextual regression model designed to forecast NBA game outcomes. Built from the ground up utilizing complex league-wide datasets.</p>
+                    <ul style="color: var(--text-muted);">
+                        <li>Integrated variables including travel distance, player availability, and advanced defensive ratings.</li>
+                        <li>Designed a clean, intuitive data visualization interface to display real-time scoring projections.</li>
+                    </ul>
+                    <div class="tech-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Data Science</span>
+                        <span class="tag">Regression Modeling</span>
+                        <span class="tag">Sports Analytics</span>
+                    </div>
+                    <button class="btn-demo" onclick="alert('Demo environment loading. (Link your hosted app URL here)')">Launch Model Demo</button>
+                </div>
+
+                <div class="glass-card">
+                    <h3>Automated Leadership Metrics Dashboard</h3>
+                    <p>Engineered a centralized data architecture to project academic bottlenecks and visualize real-time performance indicators for university leadership.</p>
+                    <div class="tech-tags">
+                        <span class="tag">Power BI</span>
+                        <span class="tag">API Integration</span>
+                        <span class="tag">Data Architecture</span>
+                    </div>
+                </div>
             </div>
-        </section>
 
-        <div class="chi-stars">✶ ✶ ✶ ✶</div>
+            <!-- Era 4: Contact -->
+            <div class="era" id="contact" style="margin-bottom: 0;">
+                <span class="era-title">Era 4: Collaboration</span>
+                <h2>Let's Build Something</h2>
+                
+                <form method="post" action="mailto:deandre.j.coleman@gmail.com" class="glass-card">
+                    <div>
+                        <label for="name" style="display:block; margin-bottom:0.5rem; font-weight:500;">Name</label>
+                        <input type="text" name="name" id="name" required />
+                    </div>
+                    <div>
+                        <label for="email" style="display:block; margin-bottom:0.5rem; font-weight:500;">Email</label>
+                        <input type="email" name="email" id="email" required />
+                    </div>
+                    <div class="full-width">
+                        <label for="message" style="display:block; margin-bottom:0.5rem; font-weight:500;">Message</label>
+                        <textarea name="message" id="message" rows="4" required></textarea>
+                    </div>
+                    <div class="full-width">
+                        <button type="submit" class="btn-demo" style="margin-top: 0;">Send Message</button>
+                    </div>
+                </form>
+            </div>
 
-        <!-- Contact Section -->
-        <section id="contact">
-            <h2>Let's Build Something</h2>
-            <p>Ready to collaborate? Send me a message directly.</p>
-            
-            <form method="post" action="mailto:deandre.j.coleman@gmail.com" class="glass-card" style="padding: 2rem;">
-                <div>
-                    <label for="name" style="display:block; margin-bottom:0.5rem; font-weight:500;">Name</label>
-                    <input type="text" name="name" id="name" required />
-                </div>
-                <div>
-                    <label for="email" style="display:block; margin-bottom:0.5rem; font-weight:500;">Email</label>
-                    <input type="email" name="email" id="email" required />
-                </div>
-                <div class="full-width">
-                    <label for="message" style="display:block; margin-bottom:0.5rem; font-weight:500;">Message</label>
-                    <textarea name="message" id="message" rows="5" required></textarea>
-                </div>
-                <div class="full-width" style="display: flex; gap: 1rem; align-items: center;">
-                    <button type="submit">Send Message</button>
-                    <a href="https://www.linkedin.com/in/deandrecoleman/" target="_blank" style="color: var(--accent); font-weight: 500; text-decoration: none;">Connect on LinkedIn</a>
-                </div>
-            </form>
-        </section>
+        </div> <!-- End Timeline -->
 
         <footer style="margin-top: 4rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
             <p>&copy; Deandre Coleman. UI/UX Designer & Software Engineer.</p>
         </footer>
     </div>
 
+    <!-- Lightbox Overlay Container -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Expanded View">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <!-- Lightbox Interactivity Script -->
+    <script>
+        function openLightbox(imageSrc, captionText) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            const caption = document.getElementById('lightbox-caption');
+            
+            img.src = imageSrc;
+            caption.innerText = captionText;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore background scrolling
+        }
+
+        // Close on Escape key press
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeLightbox();
+            }
+        });
+    </script>
 </body>
 </html>
