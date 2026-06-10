@@ -421,4 +421,146 @@
                     <option value="suns">vs Phoenix Suns</option>
                     <option value="blazers">vs Portland Trail Blazers</option>
                     <option value="kings">vs Sacramento Kings</option>
-                    <option value="spurs">vs San Antonio Spurs
+                    <option value="spurs">vs San Antonio Spurs</option>
+                    <option value="raptors">vs Toronto Raptors</option>
+                    <option value="jazz">vs Utah Jazz</option>
+                    <option value="wizards">vs Washington Wizards</option>
+                </select>
+            </div>
+            
+            <p style="font-size: 0.9rem; margin-bottom: 2rem;">Calculating regression output based on travel distance, player availability, and defensive ratings...</p>
+            
+            <div class="bar-chart-row">
+                <span class="bar-label">Chicago Bulls</span>
+                <div class="bar-track"><div class="bar-fill bulls-red" id="bulls-bar"></div></div>
+                <span class="score-value" id="bulls-score">0 pts</span>
+            </div>
+            
+            <div class="bar-chart-row">
+                <span class="bar-label" id="opp-label">NY Knicks</span>
+                <div class="bar-track"><div class="bar-fill" id="opp-bar"></div></div>
+                <span class="score-value" id="opp-score">0 pts</span>
+            </div>
+
+            <p style="color: var(--accent); font-weight: 600; font-size: 0.85rem; margin-top: 2rem;" id="sim-status">Status: Awaiting Initialization</p>
+        </div>
+    </div>
+
+    <script>
+        // Interactive Background Tracking
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            document.documentElement.style.setProperty('--mouse-x', x + '%');
+            document.documentElement.style.setProperty('--mouse-y', y + '%');
+        });
+
+        // Intersection Observer for Scroll Animations
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Lightbox Logic for Graphics
+        function openLightbox(imageSrc, captionText) {
+            document.getElementById('lightbox-img').src = imageSrc;
+            document.getElementById('lightbox-caption').innerText = captionText;
+            document.getElementById('lightbox').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Data Modal Logic for Predictive Model
+        const mockModelData = {
+            hawks: { name: "Atlanta Hawks", color: "#E03A3E", bulls: 115, opp: 109 },
+            celtics: { name: "Boston Celtics", color: "#007A33", bulls: 104, opp: 114 },
+            nets: { name: "Brooklyn Nets", color: "#000000", bulls: 111, opp: 102 },
+            hornets: { name: "Charlotte Hornets", color: "#1D1160", bulls: 118, opp: 105 },
+            cavaliers: { name: "Cleveland Cavaliers", color: "#860038", bulls: 106, opp: 108 },
+            mavericks: { name: "Dallas Mavericks", color: "#00538C", bulls: 110, opp: 115 },
+            nuggets: { name: "Denver Nuggets", color: "#0E2240", bulls: 102, opp: 112 },
+            pistons: { name: "Detroit Pistons", color: "#C8102E", bulls: 121, opp: 98 },
+            warriors: { name: "Golden State Warriors", color: "#1D428A", bulls: 108, opp: 116 },
+            rockets: { name: "Houston Rockets", color: "#CE1141", bulls: 114, opp: 110 },
+            pacers: { name: "Indiana Pacers", color: "#FDBB30", bulls: 122, opp: 118 },
+            clippers: { name: "LA Clippers", color: "#1D428A", bulls: 107, opp: 109 },
+            lakers: { name: "Los Angeles Lakers", color: "#552583", bulls: 112, opp: 114 },
+            grizzlies: { name: "Memphis Grizzlies", color: "#5D76A9", bulls: 109, opp: 105 },
+            heat: { name: "Miami Heat", color: "#98002E", bulls: 98, opp: 101 },
+            bucks: { name: "Milwaukee Bucks", color: "#00471B", bulls: 115, opp: 111 },
+            timberwolves: { name: "Minnesota Timberwolves", color: "#0C2340", bulls: 103, opp: 107 },
+            pelicans: { name: "New Orleans Pelicans", color: "#0C2340", bulls: 116, opp: 113 },
+            knicks: { name: "New York Knicks", color: "#F58426", bulls: 108, opp: 104 },
+            thunder: { name: "Oklahoma City Thunder", color: "#007AC1", bulls: 105, opp: 118 },
+            magic: { name: "Orlando Magic", color: "#0077C0", bulls: 109, opp: 106 },
+            "76ers": { name: "Philadelphia 76ers", color: "#006BB6", bulls: 111, opp: 115 },
+            suns: { name: "Phoenix Suns", color: "#1D1160", bulls: 110, opp: 114 },
+            blazers: { name: "Portland Trail Blazers", color: "#E03A3E", bulls: 119, opp: 108 },
+            kings: { name: "Sacramento Kings", color: "#5A2D81", bulls: 120, opp: 122 },
+            spurs: { name: "San Antonio Spurs", color: "#C4CED4", bulls: 117, opp: 109 },
+            raptors: { name: "Toronto Raptors", color: "#CE1141", bulls: 113, opp: 107 },
+            jazz: { name: "Utah Jazz", color: "#002B5C", bulls: 116, opp: 110 },
+            wizards: { name: "Washington Wizards", color: "#002B5C", bulls: 124, opp: 112 }
+        };
+
+        function openDataModal() {
+            document.getElementById('data-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // Set dropdown to Knicks initially and run
+            document.getElementById('team-select').value = 'knicks';
+            runSimulation();
+        }
+
+        function runSimulation() {
+            const selectedTeam = document.getElementById('team-select').value;
+            const data = mockModelData[selectedTeam];
+            const maxScore = 135; // Value to calculate percentage widths
+
+            // Reset UI for calculation effect
+            document.getElementById('bulls-bar').style.width = '0%';
+            document.getElementById('opp-bar').style.width = '0%';
+            document.getElementById('bulls-score').innerText = '...';
+            document.getElementById('opp-score').innerText = '...';
+            document.getElementById('sim-status').innerText = "Status: Recalculating regression weights...";
+            
+            // Update labels and colors immediately
+            document.getElementById('opp-label').innerText = data.name;
+            document.getElementById('opp-bar').style.backgroundColor = data.color;
+
+            // Trigger animation after short delay
+            setTimeout(() => {
+                document.getElementById('bulls-bar').style.width = ((data.bulls / maxScore) * 100) + '%';
+                document.getElementById('opp-bar').style.width = ((data.opp / maxScore) * 100) + '%';
+                
+                document.getElementById('bulls-score').innerText = data.bulls + ' pts';
+                document.getElementById('opp-score').innerText = data.opp + ' pts';
+                document.getElementById('sim-status').innerText = "Status: Prediction Rendered via Model Array";
+            }, 300);
+        }
+
+        function closeDataModal(e) {
+            document.getElementById('data-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Accessibility: Close modals on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeLightbox();
+                document.getElementById('data-modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
