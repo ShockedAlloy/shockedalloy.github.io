@@ -15,7 +15,6 @@
             --glass-border: rgba(255, 255, 255, 0.4);
             --accent: #0066cc;
             --timeline-line: #d2d2d7;
-            /* Variables for dynamic background tracking */
             --mouse-x: 50%;
             --mouse-y: 50%;
         }
@@ -27,7 +26,6 @@
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-base);
-            /* Dynamic background using CSS variables updated by JS */
             background-image: 
                 radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--chi-blue) 0%, transparent 50%),
                 radial-gradient(circle at calc(100% - var(--mouse-x)) calc(100% - var(--mouse-y)), var(--chi-red) 0%, transparent 50%);
@@ -63,10 +61,7 @@
             transition: color 0.2s ease;
         }
 
-        nav a:hover, nav a:focus {
-            color: var(--accent);
-            outline: none;
-        }
+        nav a:hover, nav a:focus { color: var(--accent); outline: none; }
 
         .container {
             max-width: 1000px;
@@ -78,6 +73,7 @@
         h1 { font-size: 3.5rem; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 0.5rem; font-weight: 700; }
         h2 { font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 1.5rem; font-weight: 600; }
         h3 { font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 600; }
+        h4 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; margin-top: 2rem; }
         p { font-size: 1.1rem; color: var(--text-muted); }
         .lead-text { font-size: 1.5rem; color: var(--text-muted); font-weight: 400; max-width: 700px; margin-bottom: 4rem; }
 
@@ -87,10 +83,7 @@
             transform: translateY(40px);
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
         .quote-block {
             text-align: center;
@@ -134,26 +127,56 @@
         .glass-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08); }
 
         /* Tech Tags */
-        .tech-tags { margin-top: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .tech-tags { margin-top: 1.5rem; margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .tag {
             background: rgba(0, 102, 204, 0.08); color: var(--accent);
             padding: 0.35rem 0.85rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;
         }
 
-        /* Asset Grids */
-        .asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
-        .asset-item { cursor: pointer; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease; background: white; padding: 0.5rem; }
-        .asset-item img { width: 100%; height: auto; border-radius: 8px; display: block; }
-        .asset-item:hover { transform: scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        /* Horizontal Scroll Filmstrip */
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+            margin-top: 1rem;
+        }
+        .scroll-container::-webkit-scrollbar { display: none; }
+        
+        .scroll-item {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            cursor: pointer;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: white;
+            padding: 0.5rem;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+        }
+        .scroll-item img {
+            height: 100%;
+            width: auto;
+            border-radius: 8px;
+            display: block;
+            object-fit: contain;
+        }
+        .scroll-item:hover { transform: scale(1.02); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
 
         /* Action Buttons */
         .btn-demo {
             display: inline-block; background: var(--text-main); color: white;
             padding: 0.75rem 1.5rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600;
-            text-decoration: none; margin-top: 1.5rem; transition: background 0.2s, transform 0.1s; border: none; cursor: pointer;
+            text-decoration: none; transition: background 0.2s, transform 0.1s; border: none; cursor: pointer;
         }
         .btn-demo:hover { background: var(--accent); }
         .btn-demo:active { transform: scale(0.95); }
+        .btn-secondary { background: var(--text-muted); }
+        .btn-secondary:hover { background: #6e6e73; }
 
         /* Lightbox and Modals */
         .lightbox {
@@ -208,18 +231,57 @@
                 <h2>Military Discipline & Graphic Identity</h2>
                 <p>Growing up in Chicago taught me that when resources are scarce, you create your own. My professional journey began in the United States Marine Corps, where discipline met creativity. I produced high-impact visual communications, production-quality prints, and award-winning branding that translated complex military directives into compelling visual narratives.</p>
 
-                <div class="asset-grid">
-                    <div class="asset-item" onclick="openLightbox('images/Branding/Talon Reach Poster.jpg', 'Talon Reach Military Flyer - Graphic Design Award Winner')" tabindex="0">
+                <h4>Branding & Print Design</h4>
+                <div class="scroll-container">
+                    <div class="scroll-item" onclick="openLightbox('images/Branding/Talon Reach Poster.jpg', 'Talon Reach Military Flyer')" tabindex="0">
                         <img src="images/Branding/Talon Reach Poster.jpg" alt="Talon Reach Poster">
                     </div>
-                    <div class="asset-item" onclick="openLightbox('images/Branding/WTI Promotion Cover Art.jpg', 'WTI Promotion Cover Art - Visual Communication')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Branding/WTI Promotion Cover Art.jpg', 'WTI Promotion Cover Art')" tabindex="0">
                         <img src="images/Branding/WTI Promotion Cover Art.jpg" alt="WTI Promotion">
                     </div>
-                    <div class="asset-item" onclick="openLightbox('images/Logos/ACAD Logo.jpg', 'ACAD Department Logo - Brand Identity')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Branding/Talon Reach DVD Design.jpg', 'Talon Reach DVD Design')" tabindex="0">
+                        <img src="images/Branding/Talon Reach DVD Design.jpg" alt="Talon Reach DVD">
+                    </div>
+                    <div class="scroll-item" onclick="openLightbox('images/Branding/Flyer.png', 'Campaign Flyer')" tabindex="0">
+                        <img src="images/Branding/Flyer.png" alt="Campaign Flyer">
+                    </div>
+                    <div class="scroll-item" onclick="openLightbox('images/Posters/MAWTS-1 Posters.jpg', 'MAWTS-1 Poster Series')" tabindex="0">
+                        <img src="images/Posters/MAWTS-1 Posters.jpg" alt="MAWTS-1 Posters">
+                    </div>
+                    <div class="scroll-item" onclick="openLightbox('images/Posters/Night Ops Poster.jpg', 'Night Ops WTI Poster')" tabindex="0">
+                        <img src="images/Posters/Night Ops Poster.jpg" alt="Night Ops Poster">
+                    </div>
+                </div>
+
+                <h4>Identity & Logos</h4>
+                <div class="scroll-container">
+                    <div class="scroll-item" onclick="openLightbox('images/Logos/ACAD Logo.jpg', 'ACAD Department Logo')" tabindex="0">
                         <img src="images/Logos/ACAD Logo.jpg" alt="ACAD Logo">
                     </div>
-                    <div class="asset-item" onclick="openLightbox('images/AR/African Safari Poster.webp', 'Augmented Reality Concept - Interactive Print')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Logos/ADT&E Logo Concept.jpg', 'ADT&E Logo Concept')" tabindex="0">
+                        <img src="images/Logos/ADT&E Logo Concept.jpg" alt="ADT&E Logo">
+                    </div>
+                    <div class="scroll-item" onclick="openLightbox('images/Logos/PD Logo.png', 'People Development Logo')" tabindex="0">
+                        <img src="images/Logos/PD Logo.png" alt="People Development Logo">
+                    </div>
+                    <div class="scroll-item" onclick="openLightbox('images/Logos/Glitz & Glitter Gallaree.png', 'Glitz & Glitter Logo')" tabindex="0">
+                        <img src="images/Logos/Glitz & Glitter Gallaree.png" alt="Glitz & Glitter">
+                    </div>
+                    <div class="scroll-item" onclick="openLightbox('images/Logos/JLCCTC Puckster Logo 3.png', 'JLCCTC Puckster Logo')" tabindex="0">
+                        <img src="images/Logos/JLCCTC Puckster Logo 3.png" alt="Puckster Logo">
+                    </div>
+                </div>
+
+                <h4>Augmented Reality Concepts</h4>
+                <div class="scroll-container">
+                    <div class="scroll-item" onclick="openLightbox('images/AR/African Safari Poster.webp', 'African Safari Interactive Effect')" tabindex="0">
                         <img src="images/AR/African Safari Poster.webp" alt="African Safari AR">
+                    </div>
+                    <div class="scroll-item" onclick="openLightbox('images/AR/Mountain Fishing Adventure.webp', 'Mountain Fishing Scene Effect')" tabindex="0">
+                        <img src="images/AR/Mountain Fishing Adventure.webp" alt="Mountain Fishing AR">
+                    </div>
+                    <div class="scroll-item" onclick="openLightbox('images/AR/Tropical Island Conservation.webp', 'Conservation Interactive Reward System')" tabindex="0">
+                        <img src="images/AR/Tropical Island Conservation.webp" alt="Tropical Island AR">
                     </div>
                 </div>
             </div>
@@ -229,6 +291,20 @@
                 <h2>From Visuals to Systems</h2>
                 <p>The transition from designing static graphics to engineering dynamic systems was fueled by a desire to build solutions at scale. I developed multiple Learning Management Systems (LMS), created dynamic eLearning materials, and mastered programming languages including Python, SQL, and JavaScript while earning my Master's in Computer Science.</p>
                 
+                <div class="glass-card reveal" style="margin-top: 2rem;">
+                    <h3>Interactive eLearning Shells</h3>
+                    <p>Developed comprehensive Learning Management System (LMS) templates and fully interactive courseware shells to standardize digital education delivery.</p>
+                    <div class="tech-tags">
+                        <span class="tag">Instructional Design</span>
+                        <span class="tag">HTML/CSS</span>
+                        <span class="tag">LMS Administration</span>
+                    </div>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="https://shockedalloy.github.io/Cloud-Computing/" target="_blank" class="btn-demo">Launch Cloud Computing Module</a>
+                        <a href="https://shockedalloy.github.io/MIT/" target="_blank" class="btn-demo btn-secondary">Launch Courseware Template</a>
+                    </div>
+                </div>
+
                 <div class="quote-block reveal">
                     <div class="quote">"Tomorrow may be fair, however stormy the sky of today."</div>
                     <div class="quote-author">Lewis Howard Latimer</div>
