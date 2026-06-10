@@ -396,123 +396,29 @@
             <div class="modal-header-row">
                 <h3 style="margin: 0;">Live Prediction Simulation</h3>
                 <select id="team-select" class="team-selector" onchange="runSimulation()">
-                    <option value="knicks">vs NY Knicks</option>
+                    <option value="hawks">vs Atlanta Hawks</option>
                     <option value="celtics">vs Boston Celtics</option>
-                    <option value="bucks">vs Milwaukee Bucks</option>
-                    <option value="heat">vs Miami Heat</option>
+                    <option value="nets">vs Brooklyn Nets</option>
+                    <option value="hornets">vs Charlotte Hornets</option>
+                    <option value="cavaliers">vs Cleveland Cavaliers</option>
+                    <option value="mavericks">vs Dallas Mavericks</option>
+                    <option value="nuggets">vs Denver Nuggets</option>
+                    <option value="pistons">vs Detroit Pistons</option>
+                    <option value="warriors">vs Golden State Warriors</option>
+                    <option value="rockets">vs Houston Rockets</option>
                     <option value="pacers">vs Indiana Pacers</option>
-                </select>
-            </div>
-            
-            <p style="font-size: 0.9rem; margin-bottom: 2rem;">Calculating regression output based on travel distance, player availability, and defensive ratings...</p>
-            
-            <div class="bar-chart-row">
-                <span class="bar-label">Chicago Bulls</span>
-                <div class="bar-track"><div class="bar-fill bulls-red" id="bulls-bar"></div></div>
-                <span class="score-value" id="bulls-score">0 pts</span>
-            </div>
-            
-            <div class="bar-chart-row">
-                <span class="bar-label" id="opp-label">NY Knicks</span>
-                <div class="bar-track"><div class="bar-fill" id="opp-bar"></div></div>
-                <span class="score-value" id="opp-score">0 pts</span>
-            </div>
-
-            <p style="color: var(--accent); font-weight: 600; font-size: 0.85rem; margin-top: 2rem;" id="sim-status">Status: Awaiting Initialization</p>
-        </div>
-    </div>
-
-    <script>
-        // Interactive Background Tracking
-        document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth) * 100;
-            const y = (e.clientY / window.innerHeight) * 100;
-            document.documentElement.style.setProperty('--mouse-x', x + '%');
-            document.documentElement.style.setProperty('--mouse-y', y + '%');
-        });
-
-        // Intersection Observer for Scroll Animations
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        revealElements.forEach(el => revealObserver.observe(el));
-
-        // Lightbox Logic for Graphics
-        function openLightbox(imageSrc, captionText) {
-            document.getElementById('lightbox-img').src = imageSrc;
-            document.getElementById('lightbox-caption').innerText = captionText;
-            document.getElementById('lightbox').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Data Modal Logic for Predictive Model
-        const mockModelData = {
-            knicks: { name: "NY Knicks", color: "#F58426", bulls: 112, opp: 108 },
-            celtics: { name: "Boston Celtics", color: "#007A33", bulls: 104, opp: 114 },
-            bucks: { name: "Milwaukee Bucks", color: "#00471B", bulls: 115, opp: 111 },
-            heat: { name: "Miami Heat", color: "#98002E", bulls: 98, opp: 101 },
-            pacers: { name: "Indiana Pacers", color: "#FDBB30", bulls: 122, opp: 118 }
-        };
-
-        function openDataModal() {
-            document.getElementById('data-modal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            
-            // Reset dropdown to default and run
-            document.getElementById('team-select').value = 'knicks';
-            runSimulation();
-        }
-
-        function runSimulation() {
-            const selectedTeam = document.getElementById('team-select').value;
-            const data = mockModelData[selectedTeam];
-            const maxScore = 135; // Value to calculate percentage widths
-
-            // Reset UI for calculation effect
-            document.getElementById('bulls-bar').style.width = '0%';
-            document.getElementById('opp-bar').style.width = '0%';
-            document.getElementById('bulls-score').innerText = '...';
-            document.getElementById('opp-score').innerText = '...';
-            document.getElementById('sim-status').innerText = "Status: Recalculating regression weights...";
-            
-            // Update labels and colors immediately
-            document.getElementById('opp-label').innerText = data.name;
-            document.getElementById('opp-bar').style.backgroundColor = data.color;
-
-            // Trigger animation after short delay
-            setTimeout(() => {
-                document.getElementById('bulls-bar').style.width = ((data.bulls / maxScore) * 100) + '%';
-                document.getElementById('opp-bar').style.width = ((data.opp / maxScore) * 100) + '%';
-                
-                document.getElementById('bulls-score').innerText = data.bulls + ' pts';
-                document.getElementById('opp-score').innerText = data.opp + ' pts';
-                document.getElementById('sim-status').innerText = "Status: Prediction Rendered via Model Array";
-            }, 300);
-        }
-
-        function closeDataModal(e) {
-            document.getElementById('data-modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Accessibility: Close modals on Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                closeLightbox();
-                document.getElementById('data-modal').style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-    </script>
-</body>
-</html>
+                    <option value="clippers">vs LA Clippers</option>
+                    <option value="lakers">vs Los Angeles Lakers</option>
+                    <option value="grizzlies">vs Memphis Grizzlies</option>
+                    <option value="heat">vs Miami Heat</option>
+                    <option value="bucks">vs Milwaukee Bucks</option>
+                    <option value="timberwolves">vs Minnesota Timberwolves</option>
+                    <option value="pelicans">vs New Orleans Pelicans</option>
+                    <option value="knicks" selected>vs New York Knicks</option>
+                    <option value="thunder">vs Oklahoma City Thunder</option>
+                    <option value="magic">vs Orlando Magic</option>
+                    <option value="76ers">vs Philadelphia 76ers</option>
+                    <option value="suns">vs Phoenix Suns</option>
+                    <option value="blazers">vs Portland Trail Blazers</option>
+                    <option value="kings">vs Sacramento Kings</option>
+                    <option value="spurs">vs San Antonio Spurs
