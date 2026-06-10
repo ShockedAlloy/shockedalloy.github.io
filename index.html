@@ -160,6 +160,7 @@
         }
         .scroll-item img { height: 100%; width: auto; border-radius: 8px; display: block; object-fit: contain; }
         .scroll-item:hover { transform: scale(1.02); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .scroll-item:focus { outline: 3px solid var(--accent); transform: scale(1.02); }
 
         /* Action Buttons */
         .btn-demo {
@@ -172,19 +173,62 @@
         .btn-secondary { background: var(--text-muted); }
         .btn-secondary:hover { background: #6e6e73; }
 
+        /* ADA Audio Button */
+        .ada-audio-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 900;
+            font-weight: 600;
+            color: var(--text-main);
+            transition: transform 0.2s, background 0.2s;
+            font-size: 0.9rem;
+        }
+        .ada-audio-btn:hover { transform: translateY(-3px); background: white; }
+        .ada-audio-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
         /* Lightbox and Modals */
         .lightbox {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(251, 251, 253, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            background: rgba(251, 251, 253, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             z-index: 1000; justify-content: center; align-items: center; flex-direction: column; cursor: pointer;
         }
-        .lightbox img { max-width: 90%; max-height: 80vh; border-radius: 16px; box-shadow: 0 24px 48px rgba(0,0,0,0.2); }
+        .lightbox img { max-width: 90%; max-height: 80vh; border-radius: 16px; box-shadow: 0 24px 48px rgba(0,0,0,0.2); cursor: default; }
         .lightbox-caption { margin-top: 1.5rem; font-size: 1.2rem; color: var(--text-main); font-weight: 500; text-align: center; }
+        
+        .close-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(0,0,0,0.6);
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            z-index: 1001;
+        }
+        .close-btn svg { width: 24px; height: 24px; fill: white; }
+        .close-btn:hover { background: black; }
 
         /* Data Modal (Bulls Demo) */
         .data-modal-content {
             background: white; border-radius: 24px; padding: 3rem; max-width: 600px; width: 90%;
-            box-shadow: 0 24px 48px rgba(0,0,0,0.15); cursor: default;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.15); cursor: default; position: relative;
         }
         
         .modal-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
@@ -225,6 +269,8 @@
             .profile-img { width: 120px; height: 120px; }
             nav a { margin: 0 0.75rem; font-size: 0.75rem; }
             .iframe-grid { grid-template-columns: 1fr; }
+            .data-modal-content { padding: 2rem; }
+            .close-btn { top: 16px; right: 16px; }
         }
     </style>
 </head>
@@ -238,7 +284,13 @@
         <a href="#contact">Contact</a>
     </nav>
 
-    <div class="container">
+    <!-- Global ADA Audio Button -->
+    <button class="ada-audio-btn" id="audio-toggle" aria-label="Read page aloud" onclick="toggleReadAloud()">
+        <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        <span id="audio-text">Listen</span>
+    </button>
+
+    <div class="container" id="main-content">
         <!-- Hero -->
         <header class="reveal">
             <div class="profile-wrapper">
@@ -258,54 +310,54 @@
 
                 <h4>Branding & Print Design</h4>
                 <div class="scroll-container">
-                    <div class="scroll-item" onclick="openLightbox('images/Branding/Talon Reach Poster.jpg', 'Talon Reach Military Flyer')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Branding/Talon Reach Poster.jpg', 'Talon Reach Military Flyer')" tabindex="0" aria-label="View Talon Reach Poster">
                         <img src="images/Branding/Talon Reach Poster.jpg" alt="Talon Reach Poster">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/Branding/WTI Promotion Cover Art.jpg', 'WTI Promotion Cover Art')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Branding/WTI Promotion Cover Art.jpg', 'WTI Promotion Cover Art')" tabindex="0" aria-label="View WTI Promotion Cover">
                         <img src="images/Branding/WTI Promotion Cover Art.jpg" alt="WTI Promotion">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/Branding/Talon Reach DVD Design.jpg', 'Talon Reach DVD Design')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Branding/Talon Reach DVD Design.jpg', 'Talon Reach DVD Design')" tabindex="0" aria-label="View Talon Reach DVD Design">
                         <img src="images/Branding/Talon Reach DVD Design.jpg" alt="Talon Reach DVD">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/Branding/Flyer.png', 'Campaign Flyer')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Branding/Flyer.png', 'Campaign Flyer')" tabindex="0" aria-label="View Campaign Flyer">
                         <img src="images/Branding/Flyer.png" alt="Campaign Flyer">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/Posters/MAWTS-1 Posters.jpg', 'MAWTS-1 Poster Series')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Posters/MAWTS-1 Posters.jpg', 'MAWTS-1 Poster Series')" tabindex="0" aria-label="View MAWTS-1 Poster">
                         <img src="images/Posters/MAWTS-1 Posters.jpg" alt="MAWTS-1 Posters">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/Posters/Night Ops Poster.jpg', 'Night Ops WTI Poster')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Posters/Night Ops Poster.jpg', 'Night Ops WTI Poster')" tabindex="0" aria-label="View Night Ops Poster">
                         <img src="images/Posters/Night Ops Poster.jpg" alt="Night Ops Poster">
                     </div>
                 </div>
 
                 <h4>Identity & Logos</h4>
                 <div class="scroll-container">
-                    <div class="scroll-item" onclick="openLightbox('images/Logos/ACAD Logo.jpg', 'ACAD Department Logo')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Logos/ACAD Logo.jpg', 'ACAD Department Logo')" tabindex="0" aria-label="View ACAD Logo">
                         <img src="images/Logos/ACAD Logo.jpg" alt="ACAD Logo">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/Logos/ADT&E Logo Concept.jpg', 'ADT&E Logo Concept')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Logos/ADT&E Logo Concept.jpg', 'ADT&E Logo Concept')" tabindex="0" aria-label="View ADT and E Logo">
                         <img src="images/Logos/ADT&E Logo Concept.jpg" alt="ADT&E Logo">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/Logos/PD Logo.png', 'People Development Logo')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Logos/PD Logo.png', 'People Development Logo')" tabindex="0" aria-label="View People Development Logo">
                         <img src="images/Logos/PD Logo.png" alt="People Development Logo">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/Logos/Glitz & Glitter Gallaree.png', 'Glitz & Glitter Logo')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Logos/Glitz & Glitter Gallaree.png', 'Glitz & Glitter Logo')" tabindex="0" aria-label="View Glitz and Glitter Logo">
                         <img src="images/Logos/Glitz & Glitter Gallaree.png" alt="Glitz & Glitter">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/Logos/JLCCTC Puckster Logo 3.png', 'JLCCTC Puckster Logo')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/Logos/JLCCTC Puckster Logo 3.png', 'JLCCTC Puckster Logo')" tabindex="0" aria-label="View JLCCTC Logo">
                         <img src="images/Logos/JLCCTC Puckster Logo 3.png" alt="Puckster Logo">
                     </div>
                 </div>
 
                 <h4>Augmented Reality Concepts</h4>
                 <div class="scroll-container">
-                    <div class="scroll-item" onclick="openLightbox('images/AR/African Safari Poster.webp', 'African Safari Interactive Effect')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/AR/African Safari Poster.webp', 'African Safari Interactive Effect')" tabindex="0" aria-label="View African Safari AR">
                         <img src="images/AR/African Safari Poster.webp" alt="African Safari AR">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/AR/Mountain Fishing Adventure.webp', 'Mountain Fishing Scene Effect')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/AR/Mountain Fishing Adventure.webp', 'Mountain Fishing Scene Effect')" tabindex="0" aria-label="View Mountain Fishing AR">
                         <img src="images/AR/Mountain Fishing Adventure.webp" alt="Mountain Fishing AR">
                     </div>
-                    <div class="scroll-item" onclick="openLightbox('images/AR/Tropical Island Conservation.webp', 'Conservation Interactive Reward System')" tabindex="0">
+                    <div class="scroll-item" onclick="openLightbox('images/AR/Tropical Island Conservation.webp', 'Conservation Interactive Reward System')" tabindex="0" aria-label="View Tropical Island AR">
                         <img src="images/AR/Tropical Island Conservation.webp" alt="Tropical Island AR">
                     </div>
                 </div>
@@ -461,15 +513,22 @@
     </div>
 
     <!-- Graphic Design Image Lightbox -->
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="Expanded View">
+    <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+        <!-- Explicit Close Button for Mobile Accessibility -->
+        <button class="close-btn" aria-label="Close image">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+        <img id="lightbox-img" src="" alt="Expanded View" onclick="event.stopPropagation()">
         <div class="lightbox-caption" id="lightbox-caption"></div>
     </div>
 
     <!-- Interactive Data Modal -->
     <div id="data-modal" class="lightbox" onclick="closeDataModal(event)">
+        <!-- Explicit Close Button for Mobile Accessibility -->
+        <button class="close-btn" aria-label="Close prediction model">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
         <div class="data-modal-content" onclick="event.stopPropagation()">
-            
             <div class="modal-header-row">
                 <h3 style="margin: 0;">Live Prediction Simulation</h3>
                 <select id="team-select" class="team-selector" onchange="runSimulation()">
@@ -551,7 +610,8 @@
             document.getElementById('lightbox').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
-        function closeLightbox() {
+        function closeLightbox(e) {
+            if(e) e.stopPropagation();
             document.getElementById('lightbox').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
@@ -601,7 +661,7 @@
         function runSimulation() {
             const selectedTeam = document.getElementById('team-select').value;
             const data = mockModelData[selectedTeam];
-            const maxScore = 135; // Value to calculate percentage widths
+            const maxScore = 135; 
 
             // Reset UI for calculation effect
             document.getElementById('bulls-bar').style.width = '0%';
@@ -610,11 +670,9 @@
             document.getElementById('opp-score').innerText = '...';
             document.getElementById('sim-status').innerText = "Status: Recalculating regression weights...";
             
-            // Update labels and colors immediately
             document.getElementById('opp-label').innerText = data.name;
             document.getElementById('opp-bar').style.backgroundColor = data.color;
 
-            // Trigger animation after short delay
             setTimeout(() => {
                 document.getElementById('bulls-bar').style.width = ((data.bulls / maxScore) * 100) + '%';
                 document.getElementById('opp-bar').style.width = ((data.opp / maxScore) * 100) + '%';
@@ -626,6 +684,7 @@
         }
 
         function closeDataModal(e) {
+            if(e) e.stopPropagation();
             document.getElementById('data-modal').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
@@ -634,10 +693,46 @@
         document.addEventListener('keydown', function(event) {
             if (event.key === "Escape") {
                 closeLightbox();
-                document.getElementById('data-modal').style.display = 'none';
-                document.body.style.overflow = 'auto';
+                closeDataModal();
             }
         });
+
+        // Accessibility: Allow keyboard "Enter" to click interactive grid items
+        document.querySelectorAll('[tabindex="0"]').forEach(el => {
+            el.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // Text-to-Speech Audio Component (ADA Compliance)
+        let isReading = false;
+        const synth = window.speechSynthesis;
+        let utterance = new SpeechSynthesisUtterance();
+
+        function toggleReadAloud() {
+            const btnText = document.getElementById('audio-text');
+            
+            if (isReading) {
+                synth.cancel();
+                isReading = false;
+                btnText.innerText = 'Listen';
+            } else {
+                // Read the main text content, excluding hidden scripts/styles
+                const contentText = document.getElementById('main-content').innerText;
+                utterance.text = contentText;
+                synth.speak(utterance);
+                isReading = true;
+                btnText.innerText = 'Stop';
+
+                utterance.onend = function() {
+                    isReading = false;
+                    btnText.innerText = 'Listen';
+                };
+            }
+        }
     </script>
 </body>
 </html>
