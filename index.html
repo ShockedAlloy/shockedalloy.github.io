@@ -204,6 +204,10 @@
         .score-value { font-weight: 700; width: 60px; text-align: right; font-variant-numeric: tabular-nums; }
         .bulls-red { background: #CE1141; }
 
+        /* Grid Layouts */
+        .grid-2-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .iframe-container { border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,0,0,0.1); background: white; }
+
         /* Forms */
         form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .full-width { grid-column: 1 / -1; }
@@ -219,6 +223,8 @@
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
             .profile-img { width: 120px; height: 120px; }
+            nav a { margin: 0 0.75rem; font-size: 0.75rem; }
+            .grid-2-col { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -227,6 +233,7 @@
     <nav>
         <a href="#foundations">Foundations</a>
         <a href="#transition">Transition</a>
+        <a href="#marketing">Marketing</a>
         <a href="#engineering">Engineering</a>
         <a href="#contact">Contact</a>
     </nav>
@@ -329,8 +336,34 @@
                 </div>
             </div>
 
+            <div class="era reveal" id="marketing">
+                <span class="era-title">Era 3: Strategic Marketing</span>
+                <h2>Connecting Products with People</h2>
+                <p>Beyond building and designing, I craft targeted marketing strategies to ensure digital products reach and resonate with their intended audiences. This involves technical communication, campaign management, and leveraging professional networks to maximize engagement.</p>
+
+                <div class="glass-card reveal" style="margin-top: 2rem;">
+                    <h3>Digital Outreach & Campaign Strategy</h3>
+                    <p>Below are recent highlights from my digital marketing initiatives, showcasing professional outreach and content strategy.</p>
+                    
+                    <div class="grid-2-col">
+                        <div class="iframe-container">
+                            <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7364030993101426692" height="400" width="100%" frameborder="0" allowfullscreen="" title="Embedded LinkedIn Post 1"></iframe>
+                        </div>
+                        <div class="iframe-container">
+                            <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7340811413549924353" height="400" width="100%" frameborder="0" allowfullscreen="" title="Embedded LinkedIn Post 2"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="tech-tags">
+                        <span class="tag">Digital Marketing</span>
+                        <span class="tag">Content Strategy</span>
+                        <span class="tag">Technical Communication</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="era reveal" id="engineering">
-                <span class="era-title">Era 3: Engineering & Innovation</span>
+                <span class="era-title">Era 4: Engineering & Innovation</span>
                 <h2>Architecting the Future</h2>
                 
                 <div class="glass-card reveal">
@@ -385,7 +418,7 @@
             </div>
 
             <div class="era reveal" id="contact" style="margin-bottom: 0;">
-                <span class="era-title">Era 4: Collaboration</span>
+                <span class="era-title">Era 5: Collaboration</span>
                 <h2>Let's Build Something</h2>
                 
                 <form method="post" action="mailto:deandre.j.coleman@gmail.com" class="glass-card reveal">
